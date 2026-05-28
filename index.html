@@ -22,7 +22,7 @@ body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;mi
 .flag-bg img{width:100%;height:100%;object-fit:cover;object-position:left center;opacity:.22;mix-blend-mode:screen}
 
 /* NAV */
-nav{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200}
+nav{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:80px;position:sticky;top:0;z-index:200}
 .logo-badge{background:linear-gradient(135deg,#c1121f,#6a0010);border:2px solid #c1121f;border-radius:6px;padding:6px 14px;display:flex;flex-direction:column;align-items:center;line-height:1.1;cursor:pointer;transition:border-color .2s}
 .logo-badge:hover{border-color:var(--red)}
 .logo-badge .l1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:#fff;letter-spacing:2px}
@@ -82,7 +82,7 @@ nav{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 2rem
 .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .news-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:all .2s}
 .news-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
-.news-thumb{height:74px;overflow:hidden;position:relative}
+.news-thumb{height:100px;overflow:hidden;position:relative}
 .news-thumb img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .2s}
 .news-card:hover .news-thumb img{opacity:.9}
 .news-body{padding:9px 11px}
@@ -105,8 +105,8 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
 .t-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .t-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:all .2s}
 .t-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
-.t-thumb{height:105px;position:relative;overflow:hidden}
-.t-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;opacity:.8;transition:opacity .2s}
+.t-thumb{height:130px;position:relative;overflow:hidden}
+.t-thumb img{width:100%;height:100%;object-fit:cover;object-position:center center;opacity:.8;transition:opacity .2s}
 .t-card:hover .t-thumb img{opacity:1}
 .t-id{position:absolute;top:7px;right:7px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:#fff;background:rgba(0,0,0,.7);padding:2px 7px;border-radius:3px}
 .t-live-badge{position:absolute;top:7px;left:7px;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:3px;animation:pulse 1.5s infinite}
@@ -269,11 +269,9 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
 <body>
 
 <nav>
-  <div class="logo-badge" onclick="showPage('home')">
-    <span class="l1">SEYCHELLES</span>
-    <span class="l2">ESPORTS</span>
-  </div>
+  <img src="Logo.png" alt="Esports Seychelles" style="height:68px;cursor:pointer;object-fit:contain" onclick="showPage('home')">
   <div class="nav-links">
+    <a onclick="showPage('home')">HOME</a><span class="sep">|</span>
     <a onclick="showPage('about')">ABOUT</a><span class="sep">|</span>
     <a onclick="showPage('tournaments')">BRACKETS</a><span class="sep">|</span>
     <a onclick="showPage('community')">COMMUNITY</a><span class="sep">|</span>
@@ -338,12 +336,12 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
   <div class="section">
     <div class="sec-title">NEWS FROM MAHÉ</div>
     <div class="news-grid">
-      <div class="news-card"><div class="news-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><div class="news-body"><div class="news-tag">SPONSOR</div><h4>New Sponsor for Tekken Series</h4><p>2 hours ago</p></div></div>
-      <div class="news-card"><div class="news-thumb"><img src="game-cover/FC24.avif" alt="FC 24"></div><div class="news-body"><div class="news-tag">PROFILE</div><h4>Profile: Mahé Player 1</h4><p>5 hours ago</p></div></div>
-      <div class="news-card"><div class="news-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"></div><div class="news-body"><div class="news-tag">RESULTS</div><h4>S.E. Praslin Cup — FC 24 Results</h4><p>1 day ago</p></div></div>
-      <div class="news-card"><div class="news-thumb"><img src="game-cover/FC24.avif" alt="FC 24"></div><div class="news-body"><div class="news-tag">COMMUNITY</div><h4>Profile: Mahé Player 2</h4><p>2 days ago</p></div></div>
-      <div class="news-card"><div class="news-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><div class="news-body"><div class="news-tag">SPONSOR</div><h4>New Sponsor for Player 2</h4><p>3 days ago</p></div></div>
-      <div class="news-card"><div class="news-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"></div><div class="news-body"><div class="news-tag">PROFILE</div><h4>Player 3: Mahé Player 24</h4><p>4 days ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="news/Player_celebrating.avif" alt="Player Celebrating"></div><div class="news-body"><div class="news-tag">RESULTS</div><h4>S.E. Praslin Cup — Winner Crowned</h4><p>2 hours ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="news/fifa_gameplay.jpg" alt="FC 26 Gameplay"></div><div class="news-body"><div class="news-tag">TOURNAMENT</div><h4>FC 26 PS5 Tournaments — Register Now</h4><p>5 hours ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="news/team_pose.webp" alt="Team Photo"></div><div class="news-body"><div class="news-tag">COMMUNITY</div><h4>Meet the Seychelles Esports Squad</h4><p>1 day ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="news/fifa_gameplay.jpg" alt="FC 26 Gameplay"></div><div class="news-body"><div class="news-tag">ANNOUNCEMENT</div><h4>New Sponsor for Tekken Series</h4><p>2 days ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="news/Player_celebrating.avif" alt="Player Celebrating"></div><div class="news-body"><div class="news-tag">SPOTLIGHT</div><h4>Player Spotlight: Mahé Player 1</h4><p>3 days ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="news/team_pose.webp" alt="Team Photo"></div><div class="news-body"><div class="news-tag">PROFILE</div><h4>Season 3 Roster Revealed</h4><p>4 days ago</p></div></div>
     </div>
   </div>
   <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
@@ -365,19 +363,19 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
   <div class="t-grid">
     <div class="t-list">
       <div class="t-card">
-        <div class="t-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"><div class="t-id">#SEQ324</div></div>
+        <div class="t-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8" style="object-position:center 20%"><div class="t-id">#SEQ324</div></div>
         <div class="t-body"><h3>S.E. Mahé Open — Tekken 8</h3><div class="t-meta">Starts: <span>OCT 12, 2026</span></div><div class="t-meta">Platform: <span>PS5</span> | Format: <span>1v1 Single Elim.</span></div><div class="t-meta">Prize Pool: <span>SCR 10,000</span></div><div class="t-reg">● REGISTRATION OPEN</div><div class="t-btns"><button class="tb p">REGISTER NOW</button><button class="tb s">VIEW BRACKET</button></div></div>
       </div>
       <div class="t-card">
-        <div class="t-thumb"><img src="game-cover/FC24.avif" alt="FC 24"><div class="t-id">#SEQ325</div></div>
+        <div class="t-thumb"><img src="game-cover/FC24.avif" alt="FC 24" style="object-position:center 15%"><div class="t-id">#SEQ325</div></div>
         <div class="t-body"><h3>S.E. Praslin Cup — FC 24</h3><div class="t-meta">Starts: <span>OCT 12, 2026</span></div><div class="t-meta">Platform: <span>PS5</span> | Format: <span>1v1 Single Elim.</span></div><div class="t-meta">Prize Pool: <span>SCR 10,000</span></div><div class="t-reg">● REGISTRATION OPEN</div><div class="t-btns"><button class="tb p">REGISTER NOW</button><button class="tb s">VIEW BRACKET</button></div></div>
       </div>
       <div class="t-card">
-        <div class="t-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"><div class="t-id">#SEQ326</div><div class="t-live-badge">LIVE</div></div>
+        <div class="t-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8" style="object-position:center 20%"><div class="t-id">#SEQ326</div><div class="t-live-badge">LIVE</div></div>
         <div class="t-body"><h3>Tekken — Tiskken Open</h3><div class="t-meta">Starts: <span>OCT 12, 2026</span></div><div class="t-meta">Platform: <span>PS5</span> | Format: <span>Online</span></div><div class="t-meta">Prize Pool: <span>SCR 10,000</span></div><div class="t-reg done">● LIVE NOW</div><div class="t-btns"><button class="tb p" onclick="showPage('live')">WATCH LIVE</button><button class="tb s">VIEW BRACKET</button></div></div>
       </div>
       <div class="t-card">
-        <div class="t-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"><div class="t-id">#SEQ323</div></div>
+        <div class="t-thumb"><img src="game-cover/Valorant.webp" alt="Valorant" style="object-position:center 10%"><div class="t-id">#SEQ323</div></div>
         <div class="t-body"><h3>Seychelles Pro League — Valorant</h3><div class="t-meta">Starts: <span>SEP 05, 2026</span></div><div class="t-meta">Platform: <span>PC</span> | Format: <span>Online</span></div><div class="t-meta">Prize Pool: <span>SCR 25,000</span></div><div class="t-reg done">● COMPLETE</div><div class="t-btns"><button class="tb s">VIEW RESULTS</button></div></div>
       </div>
     </div>
@@ -406,7 +404,7 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
     <div>
       <div class="p-card">
         <div style="font-size:10px;letter-spacing:1.5px;color:var(--muted);margin-bottom:7px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase">Active Admin</div>
-        <div class="p-avatar">🦅</div>
+        <div class="p-avatar" style="overflow:hidden;padding:0"><img src="Player-profile/player_avatar.avif" alt="Player Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>
         <div class="p-tag">GAMINATOR_MAHE_S5</div>
         <div class="p-name">Jean-Luc</div>
         <div class="p-real">Real Name: Jean</div>
@@ -474,15 +472,15 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
   <div class="bc">SEYCHELLES ESPORTS > <span>COMMUNITY</span></div>
   <div style="padding:2rem 2rem 1rem">
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:1.25rem;text-transform:uppercase">Community Hub</h1>
-    <div class="discord-banner"><div><h3>Join the Discord</h3><p>Find teammates, discuss strategy, get match alerts.</p></div><button class="discord-btn">JOIN NOW ↗</button></div>
+    <div class="discord-banner" style="position:relative;overflow:hidden"><img src="Community-About/Team_photo.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.15;pointer-events:none"><div style="position:relative;z-index:1"><h3>Join the Discord</h3><p>Find teammates, discuss strategy, get match alerts.</p></div><button class="discord-btn" style="position:relative;z-index:1">JOIN NOW ↗</button></div>
   </div>
   <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;padding:0 2rem 2rem">
     <div>
       <div class="sec-title">Latest Announcements</div>
       <div style="display:flex;flex-direction:column;gap:9px">
-        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><div class="news-body"><div class="news-tag">ANNOUNCEMENT</div><h4>Season 3 of Seychelles Pro League begins July 2026</h4><p>Rule changes and new prize pool announced.</p></div></div>
-        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="game-cover/FC24.avif" alt="FC 24"></div><div class="news-body"><div class="news-tag">NEWS</div><h4>FC 24 Mahé Open — Registration Now Open</h4><p>50 slots available. Register before June 30.</p></div></div>
-        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="game-cover/Valorant.webp" alt="Valorant"></div><div class="news-body"><div class="news-tag">SPOTLIGHT</div><h4>Player Spotlight: GAMINATOR_MAHE_95</h4><p>Meet the current Tekken champion defending his title.</p></div></div>
+        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="news/team_pose.webp" alt="Team"></div><div class="news-body"><div class="news-tag">ANNOUNCEMENT</div><h4>Season 3 of Seychelles Pro League begins July 2026</h4><p>Rule changes and new prize pool announced.</p></div></div>
+        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="news/fifa_gameplay.jpg" alt="FC 26 Gameplay"></div><div class="news-body"><div class="news-tag">NEWS</div><h4>FC 26 Mahé Open — Registration Now Open</h4><p>50 slots available. Register before June 30.</p></div></div>
+        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="news/Player_celebrating.avif" alt="Player Celebrating"></div><div class="news-body"><div class="news-tag">SPOTLIGHT</div><h4>Player Spotlight: GAMINATOR_MAHE_95</h4><p>Meet the current Tekken champion defending his title.</p></div></div>
       </div>
     </div>
     <div>
@@ -534,10 +532,20 @@ footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spac
     <div class="about-cell"><div class="about-num">03</div><h3>Our Community</h3><p>Thousands of players across the islands competing in FC 24, Tekken 8, Valorant and more — a Discord-powered community alive between events.</p></div>
   </div>
   <div style="padding:2rem 2rem 0"><div class="sec-title">The Team</div></div>
-  <div class="team-grid">
-    <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Tournament Director</div><div class="t-rl">Operations & Events</div></div>
-    <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Community Manager</div><div class="t-rl">Discord & Comms</div></div>
-    <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Technical Lead</div><div class="t-rl">Platform & Development</div></div>
+  <div style="padding:0 2rem 2rem">
+    <div style="border-radius:8px;overflow:hidden;position:relative;max-height:320px">
+      <img src="Community-About/Team_photo.jpg" alt="Seychelles Esports Team" style="width:100%;height:320px;object-fit:cover;object-position:center 45%;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,var(--navy) 0%,transparent 50%)"></div>
+      <div style="position:absolute;bottom:1.25rem;left:1.5rem">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#fff">THE CORE TEAM</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px">The people behind Seychelles Esports</div>
+      </div>
+    </div>
+    <div class="team-grid" style="padding:1rem 0 0">
+      <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Tournament Director</div><div class="t-rl">Operations & Events</div></div>
+      <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Community Manager</div><div class="t-rl">Discord & Comms</div></div>
+      <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Technical Lead</div><div class="t-rl">Platform & Development</div></div>
+    </div>
   </div>
   <footer style="margin-top:2rem"><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
 </div>
