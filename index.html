@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seychelles Esports</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0a0e1a;--navy2:#0d1221;--card:#131c2e;--card2:#162035;
+  --cyan:#00d4ff;--red:#e63946;--gold:#f4a261;--green:#2dc653;
+  --text:#e8eaf0;--muted:#7a8499;--border:#1e2d45;
+}
+body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden}
+.page{display:none}.page.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* FLAG BG — uses actual flag.webp */
+.flag-bg{position:absolute;right:0;top:0;width:55%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
+.flag-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--navy) 0%,transparent 40%),linear-gradient(to top,var(--navy) 0%,transparent 30%)}
+.flag-bg img{width:100%;height:100%;object-fit:cover;object-position:left center;opacity:.22;mix-blend-mode:screen}
+
+/* NAV */
+nav{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200}
+.logo-badge{background:linear-gradient(135deg,#c1121f,#6a0010);border:2px solid #c1121f;border-radius:6px;padding:6px 14px;display:flex;flex-direction:column;align-items:center;line-height:1.1;cursor:pointer;transition:border-color .2s}
+.logo-badge:hover{border-color:var(--red)}
+.logo-badge .l1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:#fff;letter-spacing:2px}
+.logo-badge .l2{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;color:#ffa0a0;letter-spacing:3px}
+.nav-links{display:flex;align-items:center}
+.nav-links a{color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:1.5px;padding:0 13px;cursor:pointer;transition:color .2s;text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+.nav-links .sep{color:var(--border)}
+.nav-links a.live-lnk{color:var(--cyan)}
+.nav-links a.reg-lnk{color:var(--red)}
+.nav-links a.adm-lnk{color:var(--gold)}
+
+/* BREADCRUMB */
+.bc{padding:9px 2rem;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;color:var(--muted);border-bottom:1px solid var(--border)}
+.bc span{color:var(--text)}
+
+/* BUTTONS */
+.btn-c{background:transparent;border:1.5px solid var(--cyan);color:var(--cyan);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;padding:9px 20px;cursor:pointer;transition:all .2s}
+.btn-c:hover{background:rgba(0,212,255,.1)}
+.btn-g{background:transparent;border:1.5px solid var(--muted);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;padding:9px 20px;cursor:pointer;transition:all .2s}
+.btn-g:hover{border-color:var(--text)}
+
+/* HERO */
+.hero{position:relative;padding:3.5rem 2rem 3rem;overflow:hidden;min-height:340px;display:flex;align-items:center}
+.hero-inner{position:relative;z-index:2;max-width:520px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;line-height:.95;color:#fff;margin-bottom:.6rem;letter-spacing:1px;text-transform:uppercase}
+.hero p{color:var(--muted);font-size:14px;line-height:1.65;margin-bottom:1.5rem;max-width:380px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* RED ACCENT LINE */
+.red-line{height:2px;background:var(--red);width:100%}
+
+/* FEATURE STRIP */
+.feat-strip{padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.1rem .9rem;text-align:center;cursor:pointer;transition:all .2s}
+.feat-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.feat-icon{font-size:26px;margin-bottom:7px;display:block}
+.feat-card h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;color:#fff;margin-bottom:2px;text-transform:uppercase}
+.feat-card p{font-size:11px;color:var(--muted)}
+
+/* SECTIONS */
+.section{padding:0 2rem 2rem}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:2.5px;color:var(--muted);margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:7px;text-transform:uppercase}
+
+/* NEXT MAJOR */
+.next-major{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;position:relative;overflow:hidden}
+.nm-grid{display:grid;grid-template-columns:1fr 210px;gap:1.5rem;position:relative;z-index:2}
+.nm-grid h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:8px;text-transform:uppercase}
+.meta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.mi{font-size:12px;color:var(--muted)}.mi span{color:var(--text)}
+.prize{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:1.1rem}
+.sp-col{border-left:1px solid var(--border);padding-left:1.4rem}
+.sp-col h4{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:9px;text-transform:uppercase}
+.sp-logo{background:var(--card2);border:1px solid var(--border);border-radius:5px;padding:7px 12px;margin-bottom:6px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--text)}
+
+/* NEWS */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.news-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:all .2s}
+.news-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.news-thumb{height:74px;overflow:hidden;position:relative}
+.news-thumb img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .2s}
+.news-card:hover .news-thumb img{opacity:.9}
+.news-body{padding:9px 11px}
+.news-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--cyan);margin-bottom:3px}
+.news-body h4{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+.news-body p{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* FOOTER */
+footer{background:var(--navy2);border-top:2px solid var(--red);padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+footer p{font-size:12px;color:var(--muted)}
+footer span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--muted)}
+
+/* ── TOURNAMENTS ── */
+.t-header{position:relative;padding:2rem 2rem 1.2rem;overflow:hidden}
+.t-header h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;color:#fff;position:relative;z-index:2;text-transform:uppercase}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:0 2rem 1.2rem}
+.fsel{background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Barlow',sans-serif;font-size:12px;padding:7px 11px;border-radius:5px;cursor:pointer}
+.fsel:focus{outline:none;border-color:var(--cyan)}
+.t-grid{padding:0 2rem;display:grid;grid-template-columns:1fr 205px;gap:1.2rem}
+.t-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:all .2s}
+.t-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.t-thumb{height:105px;position:relative;overflow:hidden}
+.t-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;opacity:.8;transition:opacity .2s}
+.t-card:hover .t-thumb img{opacity:1}
+.t-id{position:absolute;top:7px;right:7px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:#fff;background:rgba(0,0,0,.7);padding:2px 7px;border-radius:3px}
+.t-live-badge{position:absolute;top:7px;left:7px;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:3px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.t-body{padding:10px 11px}
+.t-body h3{font-size:13px;font-weight:600;color:#fff;margin-bottom:5px;line-height:1.25}
+.t-meta{font-size:11px;color:var(--muted);margin-bottom:3px}.t-meta span{color:var(--text)}
+.t-reg{font-size:10px;color:var(--cyan);letter-spacing:.5px;margin-bottom:7px;font-family:'Barlow Condensed',sans-serif}
+.t-reg.done{color:var(--red)}
+.t-btns{display:flex;gap:5px;flex-wrap:wrap}
+.tb{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:5px 9px;border-radius:4px;cursor:pointer;border:1.5px solid;transition:all .2s}
+.tb.p{border-color:var(--cyan);color:var(--cyan);background:transparent}.tb.p:hover{background:rgba(0,212,255,.1)}
+.tb.s{border-color:var(--border);color:var(--muted);background:transparent}.tb.s:hover{border-color:var(--muted);color:var(--text)}
+.sidebar{display:flex;flex-direction:column;gap:10px}
+.side-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.9rem}
+.side-card h4{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:9px;text-transform:uppercase}
+.w-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.w-rank{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--gold);min-width:22px}
+.w-name{font-size:12px;color:var(--text)}.w-sub{font-size:10px;color:var(--muted)}
+.g-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.g-info{display:flex;align-items:center;gap:8px}
+.g-thumb{width:26px;height:26px;border-radius:4px;overflow:hidden;flex-shrink:0}
+.g-thumb img{width:100%;height:100%;object-fit:cover}
+.g-name{font-size:12px;color:var(--text)}
+.g-count{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--cyan)}
+
+/* ── LIVE ── */
+.live-layout{display:grid;grid-template-columns:185px 1fr 245px;gap:12px;padding:1rem 2rem}
+.p-card{background:var(--card);border:1px solid var(--cyan);border-radius:6px;padding:.9rem;text-align:center}
+.p-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1a3a5c,#0a1e35);border:2px solid var(--cyan);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.p-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--muted);margin-bottom:3px}
+.p-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:#fff}
+.p-real{font-size:11px;color:var(--muted)}
+.p-rank{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--cyan);margin-top:5px}
+.m-stats{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.9rem;margin-top:10px}
+.m-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--cyan);margin-bottom:8px;text-transform:uppercase}
+.vs-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
+.vs-b{width:26px;height:26px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px}
+.vs-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--red)}
+.sc-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid var(--border)}
+.sc-row:last-child{border-bottom:none}
+.stream-box{background:#000;border:1px solid var(--border);border-radius:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.live-badge-box{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:3px;animation:pulse 1.5s infinite}
+.stream-ph{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.stream-ph p{font-size:12px;color:var(--muted);max-width:180px;line-height:1.4}
+.stream-info{background:var(--card2);border-top:1px solid var(--border);padding:7px 12px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;width:100%}
+.chat-box{background:var(--card);border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;height:100%}
+.chat-hdr{padding:9px 13px;border-bottom:1px solid var(--border);font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--cyan);display:flex;align-items:center;gap:6px;text-transform:uppercase}
+.chat-msgs{padding:8px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;max-height:280px;flex:1}
+.chat-msg{display:flex;gap:5px;align-items:flex-start}
+.c-av{width:20px;height:20px;border-radius:50%;background:var(--card2);border:1px solid var(--border);flex-shrink:0;font-size:9px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.c-txt{font-size:11px;line-height:1.4}
+.c-u{color:var(--cyan);font-weight:600}
+.c-m{color:var(--gold);font-weight:600}
+.chat-inp-row{padding:7px;border-top:1px solid var(--border);display:flex;gap:6px}
+.chat-inp{flex:1;background:var(--card2);border:1px solid var(--border);color:var(--text);font-size:12px;padding:6px 10px;border-radius:4px}
+.chat-inp:focus{outline:none;border-color:var(--cyan)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.5s infinite;flex-shrink:0}
+.sp-strip{background:var(--card2);border:1px solid var(--border);padding:7px 13px;margin:10px 2rem 0;border-radius:6px;display:flex;align-items:center;gap:12px}
+.sp-strip span{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.sp-l{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--muted);padding:3px 10px;border:1px solid var(--border);border-radius:4px}
+
+/* ── REGISTER ── */
+.steps{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:52px 1fr;gap:1.2rem;position:relative}
+.step::after{content:'';position:absolute;left:25px;top:48px;bottom:-12px;width:2px;background:var(--border)}
+.step:last-child::after{display:none}
+.step-n{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--cyan);flex-shrink:0}
+.step-b{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.1rem;margin-bottom:12px}
+.step-b h3{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:1px;color:#fff;margin-bottom:5px;text-transform:uppercase}
+.step-b p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:9px}
+.step-lnk{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--cyan);border:1.5px solid var(--cyan);padding:5px 14px;border-radius:4px;text-decoration:none;cursor:pointer;transition:all .2s;background:transparent}
+.step-lnk:hover{background:rgba(0,212,255,.1)}
+
+/* ── COMMUNITY ── */
+.discord-banner{background:linear-gradient(135deg,#4752c4,#2e3699);border-radius:6px;padding:1.5rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border:1px solid #5865f2}
+.discord-banner h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#fff;text-transform:uppercase}
+.discord-banner p{font-size:13px;color:rgba(255,255,255,.65);margin-top:3px}
+.discord-btn{background:#5865f2;color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;letter-spacing:1px;padding:9px 20px;border:none;border-radius:4px;cursor:pointer;transition:background .2s}
+.discord-btn:hover{background:#4752c4}
+
+/* ── SPONSORS ── */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.tier-card{background:var(--card);border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.tier-hdr{padding:.85rem;text-align:center}
+.tier-hdr.tl{background:linear-gradient(135deg,#d4930a,#a06d04)}
+.tier-hdr.pr{background:linear-gradient(135deg,#8a9099,#555c66)}
+.tier-hdr.md{background:linear-gradient(135deg,#1a6fcc,#0d3e7a)}
+.tier-nm{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:#fff;letter-spacing:1px;text-transform:uppercase}
+.tier-sub{font-size:11px;color:rgba(255,255,255,.75);margin-top:2px}
+.tier-body{padding:.85rem;border-top:none}
+.tier-feat{font-size:12px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px}
+.tier-feat:last-child{border-bottom:none}
+.tier-feat::before{content:'✓';color:var(--cyan);font-weight:700;font-size:13px}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.met-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.85rem;text-align:center}
+.met-n{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--cyan)}
+.met-l{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:.5px;text-transform:uppercase}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.about-cell{background:var(--navy);padding:1.75rem}
+.about-num{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:var(--cyan);opacity:.2;margin-bottom:3px}
+.about-cell h3{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:1px;color:#fff;margin-bottom:7px;text-transform:uppercase}
+.about-cell p{font-size:13px;color:var(--muted);line-height:1.6}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:2rem}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.25rem;text-align:center;transition:all .2s}
+.team-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.t-av{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--card2),#1a3a5c);border:2px solid var(--cyan);margin:0 auto 9px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.t-nm{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:#fff}
+.t-rl{font-size:11px;color:var(--cyan);margin-top:2px}
+
+/* ── ADMIN ── */
+.admin-tabs{display:flex;gap:7px;padding:1rem 2rem .5rem}
+.a-tab{background:transparent;border:1.5px solid var(--border);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;padding:6px 16px;cursor:pointer;border-radius:4px;transition:all .2s;text-transform:uppercase}
+.a-tab:hover,.a-tab.on{border-color:var(--cyan);color:var(--cyan)}
+.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 2rem 2rem}
+.a-card{background:var(--card);border:1px solid var(--cyan);border-radius:6px;padding:.9rem}
+.a-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.a-hdr h3{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--cyan);text-transform:uppercase}
+.a-2col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.a-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px;text-transform:uppercase}
+.a-btn{background:transparent;border:1.5px solid var(--cyan);color:var(--cyan);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;padding:6px 14px;cursor:pointer;border-radius:4px;width:100%;transition:all .2s;margin-top:5px;text-transform:uppercase}
+.a-btn:hover{background:rgba(0,212,255,.1)}
+.a-row{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px}
+.a-row:last-child{border-bottom:none}
+.a-row-t{flex:1;color:var(--text)}
+.a-row-m{color:var(--muted);font-size:10px}
+.a-ib{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px;transition:color .2s}
+.a-ib:hover{color:var(--cyan)}.a-ib.r:hover{color:var(--red)}
+.upload-z{border:1.5px dashed var(--border);border-radius:6px;padding:1.1rem;text-align:center;cursor:pointer;transition:border-color .2s}
+.upload-z:hover{border-color:var(--cyan)}
+.upload-z p{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.gal-item{background:var(--card2);border-radius:4px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);border:1px solid var(--border);cursor:pointer;overflow:hidden}
+.gal-item img{width:100%;height:100%;object-fit:cover}
+.sp-item{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;background:var(--card2);border-radius:4px;margin-bottom:5px}
+.sp-n{font-size:12px;color:var(--text)}
+.sp-lv{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--cyan);background:rgba(0,212,255,.1);padding:2px 6px;border-radius:3px}
+.a-inp{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);font-size:12px;padding:6px 10px;border-radius:4px;margin-bottom:5px}
+.a-inp:focus{outline:none;border-color:var(--cyan)}
+.a-sel{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);font-size:12px;padding:6px 10px;border-radius:4px;margin-bottom:5px}
+/* USER TABLE */
+.u-toolbar{display:flex;gap:9px;margin-bottom:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.u-search{flex:1;min-width:180px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:13px;padding:7px 12px;border-radius:5px}
+.u-search:focus{outline:none;border-color:var(--cyan)}
+.u-table{width:100%;border-collapse:collapse;font-size:12px}
+.u-table th{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--muted);text-align:left;padding:7px 9px;border-bottom:1px solid var(--border);text-transform:uppercase}
+.u-table td{padding:7px 9px;border-bottom:1px solid rgba(30,45,69,.5)}
+.u-table tbody tr:hover td{background:var(--card)}
+.rb{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.5px;padding:2px 7px;border-radius:3px}
+.rp{background:rgba(0,212,255,.1);color:var(--cyan)}
+.ra{background:rgba(230,57,70,.1);color:var(--red)}
+.rm{background:rgba(244,162,97,.1);color:var(--gold)}
+.rc{background:rgba(45,198,83,.1);color:var(--green)}
+.sa{color:var(--green);font-size:11px}.ss{color:var(--red);font-size:11px}
+.u-av{width:26px;height:26px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo-badge" onclick="showPage('home')">
+    <span class="l1">SEYCHELLES</span>
+    <span class="l2">ESPORTS</span>
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('about')">ABOUT</a><span class="sep">|</span>
+    <a onclick="showPage('tournaments')">BRACKETS</a><span class="sep">|</span>
+    <a onclick="showPage('community')">COMMUNITY</a><span class="sep">|</span>
+    <a onclick="showPage('sponsors')">SPONSORS</a><span class="sep">|</span>
+    <a class="live-lnk" onclick="showPage('live')">LIVE NOW</a><span class="sep">|</span>
+    <a class="reg-lnk" onclick="showPage('register')">REGISTER</a><span class="sep">|</span>
+    <a class="adm-lnk" onclick="showPage('admin')">ADMIN</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HOME ═══════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="flag-bg"><img src="flag.webp" alt=""></div>
+    <div class="hero-inner">
+      <h1>THE HUB OF<br>SEYCHELLES<br>ESPORTS</h1>
+      <p>The official platform for competitive gaming in the Seychelles — powered by Battlefy, built for champions.</p>
+      <div class="hero-btns">
+        <button class="btn-c" onclick="showPage('tournaments')">EXPLORE TOURNAMENTS</button>
+        <button class="btn-g" onclick="showPage('community')">JOIN OUR COMMUNITY</button>
+      </div>
+    </div>
+  </div>
+  <div class="red-line"></div>
+
+  <div class="feat-strip">
+    <div class="feat-card" onclick="showPage('live')"><span class="feat-icon">🔴</span><h3>LIVE TOURNAMENTS</h3><p>Watch matches live</p></div>
+    <div class="feat-card" onclick="showPage('tournaments')"><span class="feat-icon">🏆</span><h3>UPCOMING MATCHES</h3><p>View the schedule</p></div>
+    <div class="feat-card" onclick="showPage('community')"><span class="feat-icon">👥</span><h3>COMMUNITY NEWS</h3><p>Stay in the loop</p></div>
+    <div class="feat-card" onclick="showPage('tournaments')"><span class="feat-icon">📊</span><h3>LEADERBOARDS</h3><p>Top ranked players</p></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">NEXT MAJOR EVENT</div>
+    <div class="next-major">
+      <div class="flag-bg"><img src="flag.webp" alt=""></div>
+      <div class="nm-grid">
+        <div>
+          <h2>SEYCHELLES INVITE — TEKKEN 8</h2>
+          <div class="meta-row">
+            <div class="mi">Start: <span>June 15, 2026 · 14:00 SCT</span></div>
+            <div class="mi">Platform: <span>PS5</span></div>
+            <div class="mi">Format: <span>1v1 Single Elim.</span></div>
+          </div>
+          <div class="prize">SCR 10,000 PRIZE POOL</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-c" onclick="showPage('register')">REGISTER NOW</button>
+            <button class="btn-g" onclick="showPage('tournaments')">VIEW INFO</button>
+          </div>
+        </div>
+        <div class="sp-col">
+          <h4>FEATURED SPONSORS</h4>
+          <div class="sp-logo">🌊 Seychelles Tourism Board</div>
+          <div class="sp-logo">🎮 RAZER</div>
+          <div class="sp-logo">🚗 Uber</div>
+          <div class="sp-logo">🏦 ABSA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">NEWS FROM MAHÉ</div>
+    <div class="news-grid">
+      <div class="news-card"><div class="news-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><div class="news-body"><div class="news-tag">SPONSOR</div><h4>New Sponsor for Tekken Series</h4><p>2 hours ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="game-cover/FC24.avif" alt="FC 24"></div><div class="news-body"><div class="news-tag">PROFILE</div><h4>Profile: Mahé Player 1</h4><p>5 hours ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"></div><div class="news-body"><div class="news-tag">RESULTS</div><h4>S.E. Praslin Cup — FC 24 Results</h4><p>1 day ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="game-cover/FC24.avif" alt="FC 24"></div><div class="news-body"><div class="news-tag">COMMUNITY</div><h4>Profile: Mahé Player 2</h4><p>2 days ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><div class="news-body"><div class="news-tag">SPONSOR</div><h4>New Sponsor for Player 2</h4><p>3 days ago</p></div></div>
+      <div class="news-card"><div class="news-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"></div><div class="news-body"><div class="news-tag">PROFILE</div><h4>Player 3: Mahé Player 24</h4><p>4 days ago</p></div></div>
+    </div>
+  </div>
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ TOURNAMENTS ═══════════════ -->
+<div id="page-tournaments" class="page">
+  <div class="t-header">
+    <div class="flag-bg"><img src="flag.webp" alt=""></div>
+    <div class="bc" style="padding:0 0 7px;border:none;position:relative;z-index:2">SEYCHELLES ESPORTS > <span>TOURNAMENTS</span></div>
+    <h1>TOURNAMENT LISTINGS.</h1>
+  </div>
+  <div class="filter-bar">
+    <select class="fsel"><option>ALL GAMES</option><option>FC 24</option><option>Tekken 8</option><option>Valorant</option></select>
+    <select class="fsel"><option>ALL DATES</option><option>Upcoming</option><option>Past</option></select>
+    <select class="fsel"><option>ALL PLATFORMS</option><option>PS5</option><option>PC</option><option>Xbox</option></select>
+    <select class="fsel"><option>ALL STATUS</option><option>Registering</option><option>Live</option><option>Complete</option></select>
+  </div>
+  <div class="t-grid">
+    <div class="t-list">
+      <div class="t-card">
+        <div class="t-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"><div class="t-id">#SEQ324</div></div>
+        <div class="t-body"><h3>S.E. Mahé Open — Tekken 8</h3><div class="t-meta">Starts: <span>OCT 12, 2026</span></div><div class="t-meta">Platform: <span>PS5</span> | Format: <span>1v1 Single Elim.</span></div><div class="t-meta">Prize Pool: <span>SCR 10,000</span></div><div class="t-reg">● REGISTRATION OPEN</div><div class="t-btns"><button class="tb p">REGISTER NOW</button><button class="tb s">VIEW BRACKET</button></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-thumb"><img src="game-cover/FC24.avif" alt="FC 24"><div class="t-id">#SEQ325</div></div>
+        <div class="t-body"><h3>S.E. Praslin Cup — FC 24</h3><div class="t-meta">Starts: <span>OCT 12, 2026</span></div><div class="t-meta">Platform: <span>PS5</span> | Format: <span>1v1 Single Elim.</span></div><div class="t-meta">Prize Pool: <span>SCR 10,000</span></div><div class="t-reg">● REGISTRATION OPEN</div><div class="t-btns"><button class="tb p">REGISTER NOW</button><button class="tb s">VIEW BRACKET</button></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"><div class="t-id">#SEQ326</div><div class="t-live-badge">LIVE</div></div>
+        <div class="t-body"><h3>Tekken — Tiskken Open</h3><div class="t-meta">Starts: <span>OCT 12, 2026</span></div><div class="t-meta">Platform: <span>PS5</span> | Format: <span>Online</span></div><div class="t-meta">Prize Pool: <span>SCR 10,000</span></div><div class="t-reg done">● LIVE NOW</div><div class="t-btns"><button class="tb p" onclick="showPage('live')">WATCH LIVE</button><button class="tb s">VIEW BRACKET</button></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"><div class="t-id">#SEQ323</div></div>
+        <div class="t-body"><h3>Seychelles Pro League — Valorant</h3><div class="t-meta">Starts: <span>SEP 05, 2026</span></div><div class="t-meta">Platform: <span>PC</span> | Format: <span>Online</span></div><div class="t-meta">Prize Pool: <span>SCR 25,000</span></div><div class="t-reg done">● COMPLETE</div><div class="t-btns"><button class="tb s">VIEW RESULTS</button></div></div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="side-card">
+        <h4>RECENT WINNERS</h4>
+        <div class="w-row"><div class="w-rank">1st</div><div><div class="w-name">Seychelles 1</div><div class="w-sub">Tekken 8 Open</div></div></div>
+        <div class="w-row"><div class="w-rank" style="color:var(--muted)">2nd</div><div><div class="w-name">Seychelles 2</div><div class="w-sub">2nd Place</div></div></div>
+        <div class="w-row"><div class="w-rank" style="color:#cd7f32">3rd</div><div><div class="w-name">Seychelles 3</div><div class="w-sub">3rd Place</div></div></div>
+      </div>
+      <div class="side-card">
+        <h4>TOP GAMES</h4>
+        <div class="g-row"><div class="g-info"><div class="g-thumb"><img src="game-cover/FC24.avif" alt="FC 24"></div><span class="g-name">FC 24</span></div><span class="g-count">55</span></div>
+        <div class="g-row"><div class="g-info"><div class="g-thumb"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><span class="g-name">Tekken 8</span></div><span class="g-count">12</span></div>
+        <div class="g-row"><div class="g-info"><div class="g-thumb"><img src="game-cover/Valorant.webp" alt="Valorant"></div><span class="g-name">Valorant</span></div><span class="g-count">8</span></div>
+      </div>
+    </div>
+  </div>
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ LIVE ═══════════════ -->
+<div id="page-live" class="page">
+  <div class="bc">SEYCHELLES ESPORTS > LIVE NOW > <span>MAHÉ OPEN — TEKKEN 8</span></div>
+  <div class="live-layout">
+    <div>
+      <div class="p-card">
+        <div style="font-size:10px;letter-spacing:1.5px;color:var(--muted);margin-bottom:7px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase">Active Admin</div>
+        <div class="p-avatar">🦅</div>
+        <div class="p-tag">GAMINATOR_MAHE_S5</div>
+        <div class="p-name">Jean-Luc</div>
+        <div class="p-real">Real Name: Jean</div>
+        <div class="p-rank">PLATINUM II</div>
+      </div>
+      <div class="m-stats">
+        <div class="m-title">Match Stats</div>
+        <div class="vs-row"><div class="vs-b">🦅</div><div class="vs-n">1 vs 2</div><div class="vs-b">🐉</div></div>
+        <div class="sc-row"><span style="color:var(--text)">Team 1</span><span>0</span><span>0</span></div>
+        <div class="sc-row"><span style="color:var(--text)">Team 2</span><span>0</span><span>0</span></div>
+        <div class="sc-row"><span style="color:var(--text)">Team 3</span><span>0</span><span>0</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="stream-box" style="min-height:270px">
+        <div class="live-badge-box">LIVE</div>
+        <div class="stream-ph">
+          <span style="font-size:34px">📺</span>
+          <p>Twitch / YouTube live stream embed</p>
+          <p style="font-size:10px;color:rgba(122,132,153,.4);margin-top:3px">Battlefy bracket widget also embedded here</p>
+        </div>
+      </div>
+      <div class="stream-info">
+        <span>LIVE MATCH: [Team 1] vs. [Team 2] — Final Stage — Tekken 8</span>
+        <span style="color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700">TEKKEN 8</span>
+      </div>
+      <div class="sp-strip"><span>Sponsors</span><div class="sp-l">RAZER</div><div class="sp-l">🌊 SEY TOURISM</div></div>
+    </div>
+    <div class="chat-box">
+      <div class="chat-hdr"><div class="live-dot"></div>Live Chat</div>
+      <div class="chat-msgs">
+        <div class="chat-msg"><div class="c-av">M</div><div class="c-txt"><span class="c-m">Mod</span> GG!</div></div>
+        <div class="chat-msg"><div class="c-av">S</div><div class="c-txt"><span class="c-u">SEYGamer:</span> Seychelles that combo!</div></div>
+        <div class="chat-msg"><div class="c-av">S</div><div class="c-txt"><span class="c-u">SEYGamer:</span> Ti Mahé Player 1</div></div>
+        <div class="chat-msg"><div class="c-av">S</div><div class="c-txt"><span class="c-u">SEYGamer:</span> Seychelles represent!</div></div>
+        <div class="chat-msg"><div class="c-av">S</div><div class="c-txt"><span class="c-u">SEYGamer:</span> The Seychelles represent!</div></div>
+        <div class="chat-msg"><div class="c-av">S</div><div class="c-txt"><span class="c-u">SEYGamer:</span> That combo! 👊</div></div>
+      </div>
+      <div class="chat-inp-row">
+        <input class="chat-inp" placeholder="Type a message...">
+        <button style="background:var(--cyan);border:none;color:#000;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:13px">➤</button>
+      </div>
+    </div>
+  </div>
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ REGISTER ═══════════════ -->
+<div id="page-register" class="page">
+  <div class="bc">SEYCHELLES ESPORTS > <span>GET STARTED / REGISTER</span></div>
+  <div style="padding:2rem">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:6px;text-transform:uppercase">Registration Guide</h1>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:2rem">Everything you need to compete in Seychelles Esports tournaments — powered by Battlefy.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-b"><h3>Create a Battlefy Account</h3><p>Battlefy is our official tournament platform. All registrations, brackets, and match results are managed there. Create your free account to get started.</p><a class="step-lnk" href="https://battlefy.com" target="_blank">CREATE BATTLEFY ACCOUNT ↗</a></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-b"><h3>Join Our Discord</h3><p>Our Discord is the heart of the Seychelles Esports community. Get match notifications, find teammates, coordinate online schedules, and stay updated on all events.</p><a class="step-lnk" href="#">JOIN DISCORD ↗</a></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-b"><h3>Find Your Tournament</h3><p>Browse the schedule, pick a game you compete in, and register directly through the Battlefy link on the tournament page.</p><button class="step-lnk" onclick="showPage('tournaments')">VIEW SCHEDULE →</button></div></div>
+    </div>
+  </div>
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ COMMUNITY ═══════════════ -->
+<div id="page-community" class="page">
+  <div class="bc">SEYCHELLES ESPORTS > <span>COMMUNITY</span></div>
+  <div style="padding:2rem 2rem 1rem">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:1.25rem;text-transform:uppercase">Community Hub</h1>
+    <div class="discord-banner"><div><h3>Join the Discord</h3><p>Find teammates, discuss strategy, get match alerts.</p></div><button class="discord-btn">JOIN NOW ↗</button></div>
+  </div>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;padding:0 2rem 2rem">
+    <div>
+      <div class="sec-title">Latest Announcements</div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div><div class="news-body"><div class="news-tag">ANNOUNCEMENT</div><h4>Season 3 of Seychelles Pro League begins July 2026</h4><p>Rule changes and new prize pool announced.</p></div></div>
+        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="game-cover/FC24.avif" alt="FC 24"></div><div class="news-body"><div class="news-tag">NEWS</div><h4>FC 24 Mahé Open — Registration Now Open</h4><p>50 slots available. Register before June 30.</p></div></div>
+        <div class="news-card" style="display:grid;grid-template-columns:80px 1fr"><div class="news-thumb" style="height:auto;min-height:70px"><img src="game-cover/Valorant.webp" alt="Valorant"></div><div class="news-body"><div class="news-tag">SPOTLIGHT</div><h4>Player Spotlight: GAMINATOR_MAHE_95</h4><p>Meet the current Tekken champion defending his title.</p></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-title">Online FAQs</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="side-card"><h4 style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:0;text-transform:none">What internet speed do I need?</h4><p style="font-size:12px;color:var(--muted)">Minimum 10Mbps stable connection recommended.</p></div>
+        <div class="side-card"><h4 style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:0;text-transform:none">How do I report a connection issue?</h4><p style="font-size:12px;color:var(--muted)">Report to a moderator on Discord within 5 minutes.</p></div>
+        <div class="side-card"><h4 style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:0;text-transform:none">What is the fair play policy?</h4><p style="font-size:12px;color:var(--muted)">Cheating results in immediate disqualification.</p></div>
+      </div>
+    </div>
+  </div>
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ SPONSORS ═══════════════ -->
+<div id="page-sponsors" class="page">
+  <div class="bc">SEYCHELLES ESPORTS > <span>FOR SPONSORS</span></div>
+  <div style="padding:2rem">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:#fff;margin-bottom:6px;text-transform:uppercase">Partner With Us</h1>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:1.5rem">Reach the most engaged esports audience in the Indian Ocean.</p>
+    <div class="metrics-grid">
+      <div class="met-card"><div class="met-n">2.4K</div><div class="met-l">Registered Players</div></div>
+      <div class="met-card"><div class="met-n">12K</div><div class="met-l">Monthly Viewers</div></div>
+      <div class="met-card"><div class="met-n">48</div><div class="met-l">Tournaments Run</div></div>
+      <div class="met-card"><div class="met-n">SCR 120K</div><div class="met-l">Total Prize Money</div></div>
+    </div>
+    <div class="sec-title">Sponsorship Tiers</div>
+    <div class="tier-grid">
+      <div class="tier-card"><div class="tier-hdr tl"><div class="tier-nm">Title Sponsor</div><div class="tier-sub">Premier partnership</div></div><div class="tier-body"><div class="tier-feat">Logo on all tournament pages</div><div class="tier-feat">Homepage hero placement</div><div class="tier-feat">Live stream overlay branding</div><div class="tier-feat">Tournament naming rights</div></div></div>
+      <div class="tier-card"><div class="tier-hdr pr"><div class="tier-nm">Prize Pool Sponsor</div><div class="tier-sub">Contribute to winnings</div></div><div class="tier-body"><div class="tier-feat">Logo on results pages</div><div class="tier-feat">Homepage sidebar placement</div><div class="tier-feat">Discord acknowledgement</div><div class="tier-feat">Winner announcement branding</div></div></div>
+      <div class="tier-card"><div class="tier-hdr md"><div class="tier-nm">Media Partner</div><div class="tier-sub">Digital reach focused</div></div><div class="tier-body"><div class="tier-feat">Logo in community news</div><div class="tier-feat">Social media cross-promotion</div><div class="tier-feat">Newsletter feature</div><div class="tier-feat">Discord channel partnership</div></div></div>
+    </div>
+    <div style="text-align:center;margin-top:1.5rem"><button class="btn-c" style="font-size:13px;padding:12px 28px">GET IN TOUCH →</button></div>
+  </div>
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<div id="page-about" class="page">
+  <div class="bc">SEYCHELLES ESPORTS > <span>ABOUT US</span></div>
+  <div style="position:relative;padding:3rem 2rem;overflow:hidden;border-bottom:1px solid var(--border)">
+    <div class="flag-bg"><img src="flag.webp" alt=""></div>
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900;color:#fff;position:relative;z-index:2;max-width:580px;line-height:1.05;text-transform:uppercase">Professionalizing Competitive Gaming in the Seychelles</h1>
+    <p style="color:var(--muted);font-size:14px;margin-top:.9rem;position:relative;z-index:2;max-width:460px;line-height:1.65">Building the infrastructure for online competitive gaming — connecting players, fans, and sponsors through a world-class digital platform.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-cell"><div class="about-num">01</div><h3>Our Mission</h3><p>To professionalize online competitive gaming in the Seychelles — creating pathways for local talent to compete, grow, and be recognized on a global stage.</p></div>
+    <div class="about-cell"><div class="about-num">02</div><h3>Our Platform</h3><p>Built on Battlefy for tournament logistics — with our own branded layer for community, news, and identity. Everything from registration to results, in one place.</p></div>
+    <div class="about-cell"><div class="about-num">03</div><h3>Our Community</h3><p>Thousands of players across the islands competing in FC 24, Tekken 8, Valorant and more — a Discord-powered community alive between events.</p></div>
+  </div>
+  <div style="padding:2rem 2rem 0"><div class="sec-title">The Team</div></div>
+  <div class="team-grid">
+    <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Tournament Director</div><div class="t-rl">Operations & Events</div></div>
+    <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Community Manager</div><div class="t-rl">Discord & Comms</div></div>
+    <div class="team-card"><div class="t-av">👤</div><div class="t-nm">Technical Lead</div><div class="t-rl">Platform & Development</div></div>
+  </div>
+  <footer style="margin-top:2rem"><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<!-- ═══════════════ ADMIN ═══════════════ -->
+<div id="page-admin" class="page">
+  <div class="bc">SEYCHELLES ESPORTS > ADMIN DASHBOARD > <span>GAMINATOR_MAHE_95</span></div>
+  <div class="admin-tabs">
+    <button class="a-tab on" onclick="showAdminTab('content',this)">Content</button>
+    <button class="a-tab" onclick="showAdminTab('users',this)">Users</button>
+    <button class="a-tab" onclick="showAdminTab('sponsors',this)">Sponsors</button>
+  </div>
+
+  <div id="atab-content" class="admin-grid">
+    <div class="a-card">
+      <div class="a-hdr"><span>📝</span><h3>News Editor</h3><span style="margin-left:auto;font-size:10px;color:var(--cyan);letter-spacing:1px">REAL TIME PREVIEW</span></div>
+      <div class="a-2col">
+        <div><div class="a-sub">Create New Post</div><input class="a-inp" placeholder="Post title..."><textarea class="a-inp" rows="3" placeholder="Content..."></textarea><button class="a-btn">+ Create Post</button></div>
+        <div><div class="a-sub">Recent Posts</div>
+          <div class="a-row"><div class="a-row-t">Seychelles Tournament Bound</div><div style="display:flex;gap:4px"><button class="a-ib">✏️</button><button class="a-ib r">🗑</button></div></div>
+          <div class="a-row"><div class="a-row-t">S. Mahé Open — Tekken 8</div><div style="display:flex;gap:4px"><button class="a-ib">✏️</button><button class="a-ib r">🗑</button></div></div>
+          <div class="a-row"><div class="a-row-t">S.E. Praslin Cup — FC 24</div><div style="display:flex;gap:4px"><button class="a-ib">✏️</button><button class="a-ib r">🗑</button></div></div>
+          <div class="a-row"><div class="a-row-t">Seychelles Pro League Update</div><div style="display:flex;gap:4px"><button class="a-ib">✏️</button><button class="a-ib r">🗑</button></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="a-card">
+      <div class="a-hdr"><span>🏆</span><h3>Results Uploader</h3></div>
+      <div class="a-2col">
+        <div><div class="a-sub">Upload Match Results</div><select class="a-sel"><option>FC 24 Tournament</option><option>Tekken 8 Open</option></select><input class="a-inp" placeholder="Match ID / Team 1"><input class="a-inp" placeholder="Team 2"><div style="display:flex;gap:5px"><input class="a-inp" placeholder="Score 1" style="width:50%"><input class="a-inp" placeholder="Score 2" style="width:50%"></div><button class="a-btn">Upload Result</button></div>
+        <div><div class="a-sub">Recent Uploads</div>
+          <div class="a-row"><div class="a-row-t">Match 01</div><div class="a-row-m">Win S · Uptan</div></div>
+          <div class="a-row"><div class="a-row-t">Match 02</div><div class="a-row-m">Win S · Uptan</div></div>
+          <div class="a-row"><div class="a-row-t">Match 03</div><div class="a-row-m">Win S · Uptan</div></div>
+          <div class="a-row"><div class="a-row-t">Match 04</div><div class="a-row-m">Win S · Uptan</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="a-card">
+      <div class="a-hdr"><span>🖼</span><h3>Photo Gallery Manager</h3></div>
+      <div class="a-2col">
+        <div><div class="upload-z"><div style="font-size:26px">⬆️</div><p>DRAG & DROP<br>Upload file queue<br>visual file queue</p></div></div>
+        <div><div class="a-sub">Galleries</div>
+          <div class="gal-grid">
+            <div class="gal-item"><img src="game-cover/FC24.avif" alt="FC 24"></div>
+            <div class="gal-item"><img src="game-cover/Tekken8.jpg" alt="Tekken 8"></div>
+            <div class="gal-item"><img src="game-cover/Valorant.webp" alt="Valorant"></div>
+            <div class="gal-item">+</div><div class="gal-item">🖼</div><div class="gal-item">🖼</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="a-card">
+      <div class="a-hdr"><span>💰</span><h3>Sponsor Manager</h3></div>
+      <div class="a-2col">
+        <div><div class="a-sub">Current Sponsors</div>
+          <div class="sp-item"><span class="sp-n">Seychelles Tourism Board</span><span class="sp-lv">TITLE</span></div>
+          <div class="sp-item"><span class="sp-n">RAZER</span><span class="sp-lv">PRIZE</span></div>
+          <div class="sp-item"><span class="sp-n">ABSA</span><span class="sp-lv">MEDIA</span></div>
+          <div class="sp-item"><span class="sp-n">Uber</span><span class="sp-lv">MEDIA</span></div>
+        </div>
+        <div><div class="a-sub">Add Sponsor</div><input class="a-inp" placeholder="Company Name"><select class="a-sel"><option>Tier — Title / Prize / Media</option><option>Title</option><option>Prize Pool</option><option>Media</option></select><select class="a-sel"><option>Homepage placement</option><option>Hero</option><option>Sidebar</option><option>Footer</option></select><button class="a-btn">Add Sponsor</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="atab-users" style="display:none;padding:0 2rem 2rem">
+    <div class="u-toolbar">
+      <input class="u-search" placeholder="Search by Name / Email...">
+      <select class="fsel">Filter by Role</select>
+      <select class="fsel">Account Status</select>
+      <button class="btn-c" style="font-size:11px;padding:7px 14px;white-space:nowrap">+ CREATE USER</button>
+    </div>
+    <table class="u-table">
+      <thead><tr><th>User ID</th><th>Av.</th><th>Username</th><th>Email</th><th>Role</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td>12321</td><td><div class="u-av">S</div></td><td>Seychelles</td><td>name@seychells.com</td><td><span class="rb rp">Player</span></td><td>Jun 15, 2026</td><td><span class="sa">● Active</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+        <tr><td>12322</td><td><div class="u-av">S</div></td><td>Seychelles</td><td>mahe@seychells.com</td><td><span class="rb rp">Player</span></td><td>Jun 15, 2026</td><td><span class="sa">● Active</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+        <tr><td>12323</td><td><div class="u-av">S</div></td><td>Seychelles</td><td>qalsh@seynods.com</td><td><span class="rb rc">Captain</span></td><td>Jun 15, 2026</td><td><span class="ss">● Suspended</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+        <tr><td>12824</td><td><div class="u-av">T</div></td><td>Tekken</td><td>maey@srymail.com</td><td><span class="rb rm">Moderator</span></td><td>Jun 15, 2026</td><td><span class="sa">● Active</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+        <tr><td>12825</td><td><div class="u-av">E</div></td><td>Evnna k1</td><td>evnna@egmail.com</td><td><span class="rb ra">Admin</span></td><td>Jun 15, 2026</td><td><span class="sa">● Active</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+        <tr><td>12826</td><td><div class="u-av">N</div></td><td>Nivahron</td><td>niwan@egmail.com</td><td><span class="rb ra">Admin</span></td><td>Jun 15, 2026</td><td><span class="sa">● Active</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+        <tr><td>12928</td><td><div class="u-av">T</div></td><td>Takaṅ</td><td>liaken@egmail.com</td><td><span class="rb ra">Admin</span></td><td>Jun 15, 2026</td><td><span class="ss">● Suspended</span></td><td><button class="a-ib">✏️</button><button class="a-ib">👁</button><button class="a-ib r">🗑</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="atab-sponsors" style="display:none;padding:0 2rem 2rem">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+      <div class="a-card">
+        <div class="a-hdr"><h3>Active Sponsors</h3></div>
+        <div class="sp-item"><span class="sp-n">🌊 Seychelles Tourism Board</span><span class="sp-lv">TITLE</span></div>
+        <div class="sp-item"><span class="sp-n">🎮 RAZER</span><span class="sp-lv">PRIZE</span></div>
+        <div class="sp-item"><span class="sp-n">🚗 Uber</span><span class="sp-lv">MEDIA</span></div>
+        <div class="sp-item"><span class="sp-n">🏦 ABSA</span><span class="sp-lv">MEDIA</span></div>
+      </div>
+      <div class="a-card">
+        <div class="a-hdr"><h3>Add New Sponsor</h3></div>
+        <input class="a-inp" placeholder="Company name">
+        <input class="a-inp" placeholder="Website URL">
+        <select class="a-sel"><option>Sponsorship tier</option><option>Title Sponsor</option><option>Prize Pool Sponsor</option><option>Media Partner</option></select>
+        <select class="a-sel"><option>Homepage placement</option><option>Hero</option><option>Sidebar</option><option>Footer</option></select>
+        <button class="a-btn">Add Sponsor</button>
+      </div>
+    </div>
+  </div>
+
+  <footer><p>Seychelles Esports © 2026</p><span>MINIMALIST. MODERN. MAHÉ.</span></footer>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function showAdminTab(tab,btn){
+  ['content','users','sponsors'].forEach(t=>{
+    const el=document.getElementById('atab-'+t);
+    if(el)el.style.display=t===tab?(t==='content'?'grid':'block'):'none';
+  });
+  document.querySelectorAll('.a-tab').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+}
+</script>
+</body>
+</html>
