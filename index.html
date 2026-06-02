@@ -79,11 +79,27 @@ nav{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 2rem
   .t-header h1{font-size:30px}
   .filter-bar{padding:0 1.2rem 1rem;gap:8px}
   .fsel{font-size:12px;padding:8px 10px;flex:1 1 calc(50% - 4px)}
-  .t-grid{grid-template-columns:1fr;padding:0 1.2rem;gap:1rem}
+  .t-grid{grid-template-columns:1fr!important;padding:0 1.2rem;gap:1rem}
   .t-list{grid-template-columns:1fr;gap:12px}
   .t-thumb{height:160px}
   .sidebar{margin-top:0}
   .side-card{padding:1rem}
+  .t-grid{grid-template-columns:1fr!important;padding:0 1.2rem;gap:1rem}
+  .t-body h3{font-size:14px}
+  .t-meta{font-size:12px}
+  .t-btns{flex-wrap:nowrap}
+
+@media(max-width:480px){
+  .t-list{grid-template-columns:1fr!important}
+  .feat-strip{grid-template-columns:repeat(2,1fr)}
+  .hero h1{font-size:32px}
+  .t-body{padding:10px}
+  .t-meta{white-space:normal;word-break:break-word}
+  .tb{font-size:10px;padding:5px 8px}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:1fr}
+  .news-thumb{height:140px}
+}
 
   .live-layout{grid-template-columns:1fr;padding:.8rem 1.2rem;gap:12px}
   .sp-strip{margin:10px 1.2rem 0}
